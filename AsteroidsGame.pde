@@ -1,16 +1,100 @@
-//your variable declarations here
-public void setup() 
+private Spaceship spaceship = new Spaceship();
+private Asteroid ast = new Asteroid();
+//private Bullet bul = new Bullet();
+Star[] nightSky = new Star[200];
+public void setup() {
+  size(400, 400);
+  for (int i = 0; i < nightSky.length; i ++) {
+    nightSky[i] = new Star();
+  }
+}
+public void draw() {
+  background(0);
+  for(int i = 0; i< nightSky.length; i++)
+  {
+    nightSky[i].show();
+  } 
+  spaceship.move();
+  spaceship.show();
+}
+
+public void keyPressed() {
+  if (keyCode == 38)//up
+    spaceship.setY(spaceship.getY() - spaceship.getDirectionY());
+  if (keyCode == 40)//down
+    spaceship.setY(spaceship.getY() + spaceship.getDirectionY());
+  if (keyCode == 37)//left
+    spaceship.setX(spaceship.getX() - spaceship.getDirectionX());
+  if (keyCode == 39)//right
+    spaceship.setX(spaceship.getX() - spaceship.getDirectionX());
+  //if (keyCode = 96)//numpad 0
+    //spaceship.setDirectionX(0);
+    //spaceship.setDirectionY(0);
+}
+
+class Star
 {
-  //your code here
+  private int myX, myY;
+  public Star()
+  {
+    myX = (int)(Math.random()*500);
+    myY = (int)(Math.random()*500);
+  }
+  public void show()
+  {
+    fill(255);
+    ellipse(myX, myY, 3, 3);
+  }
 }
-public void draw() 
-{
-  //your code here
+class Spaceship extends Floater  
+{ 
+  public Spaceship() 
+  {
+    myColor = color(50, 60, 80);
+    myCenterX = 200;
+    myCenterY = 200;
+    myDirectionX = 1;
+    myDirectionY = 1;
+    myPointDirection = 0;
+    corners = 4;
+    int[] xS = {-8, 16, -8, -2};
+    int[] yS = {-8, 0, 8, 0};
+    xCorners = xS;
+    yCorners = yS;
+  }
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX () {return (double)myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return (double)myDirectionY;};
+  public  void  setPointDirection (int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return (int)myPointDirection;}
+
 }
-class SpaceShip //extends Floater  
-{   
-    //your code here
+class Asteroid extends Floater {
+  public Asteroid() {
+    myColor = color(50);
+  }
+  public void setX(int x){} 
+  public int getX(){return 0;}
+  public void setY(int y){} 
+  public int getY(){return 0;}   
+  public void setDirectionX(double x){}   
+  public double getDirectionX(){return 0;};   
+  public void setDirectionY(double y){}  
+  public double getDirectionY(){return 0;};   
+  public void setPointDirection(int degrees){} 
+  public double getPointDirection(){return 0;}; 
+  
 }
+/*class Bullet extends Floater {
+  public Bullet() {
+  }
+ 
+}*/
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
