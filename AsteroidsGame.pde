@@ -3,7 +3,7 @@ private Asteroid ast = new Asteroid();
 //private Bullet bul = new Bullet();
 Star[] nightSky = new Star[200];
 public void setup() {
-  size(400, 400);
+  size(500, 500);
   for (int i = 0; i < nightSky.length; i ++) {
     nightSky[i] = new Star();
   }
@@ -16,22 +16,30 @@ public void draw() {
   } 
   spaceship.move();
   spaceship.show();
+  textSize(15);
+  text(" X Position: " + spaceship.getX(), 20, 20);
+  text(" Y Position: " + spaceship.getY(), 20, 40);
 }
 
 public void keyPressed() {
-  if (keyCode == 38)//up
-    spaceship.setY(spaceship.getY() - spaceship.getDirectionY());
-  if (keyCode == 40)//down
-    spaceship.setY(spaceship.getY() + spaceship.getDirectionY());
-  if (keyCode == 37)//left
-    spaceship.setX(spaceship.getX() - spaceship.getDirectionX());
-  if (keyCode == 39)//right
-    spaceship.setX(spaceship.getX() - spaceship.getDirectionX());
-  //if (keyCode = 96)//numpad 0
-    //spaceship.setDirectionX(0);
-    //spaceship.setDirectionY(0);
+  if (keyCode == UP)//up
+    spaceship.accelerate(.3);
+  if (keyCode == LEFT)//left
+    spaceship.rotate(-10);
+  if (keyCode == RIGHT)//right
+    spaceship.rotate(10);
+  if (keyCode == DOWN){//hyperspace
+    for (int i = 0; i < 1000; i++){
+      spaceship.setX((int)(Math.random()*500));
+      spaceship.setY((int)(Math.random()*500));
+      spaceship.setPointDirection((int)(Math.random()*360));
+      spaceship.setDirectionX(0);
+      spaceship.setDirectionY(0);
+      if (keyCode == UP)
+        return;
+    }
+  }
 }
-
 class Star
 {
   private int myX, myY;
@@ -50,7 +58,7 @@ class Spaceship extends Floater
 { 
   public Spaceship() 
   {
-    myColor = color(50, 60, 80);
+    myColor = color(50, 60, 180);
     myCenterX = 200;
     myCenterY = 200;
     myDirectionX = 1;
@@ -77,17 +85,23 @@ class Spaceship extends Floater
 class Asteroid extends Floater {
   public Asteroid() {
     myColor = color(50);
+
+    myCenterX = Math.random()*400;
+    myCenterY = Math.random()*400;
+    myDirectionX = 
+    myDirectionY = 
+    myPointDirection = Math.random()*360;
   }
-  public void setX(int x){} 
-  public int getX(){return 0;}
-  public void setY(int y){} 
-  public int getY(){return 0;}   
-  public void setDirectionX(double x){}   
-  public double getDirectionX(){return 0;};   
-  public void setDirectionY(double y){}  
-  public double getDirectionY(){return 0;};   
-  public void setPointDirection(int degrees){} 
-  public double getPointDirection(){return 0;}; 
+  public void setX(int x){myCenterX = x;} 
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;} 
+  public int getY(){return (int)myCenterY;}   
+  public void setDirectionX(double x){myDirectionX = x;}   
+  public double getDirectionX(){return (double)myDirectionX;};   
+  public void setDirectionY(double y){myDirectionY = y;}  
+  public double getDirectionY(){return (double)myDirectionY;};   
+  public void setPointDirection(int degrees){myPointDirection = degrees;} 
+  public double getPointDirection(){return (int)myPointDirection;}; 
   
 }
 /*class Bullet extends Floater {
