@@ -1,11 +1,15 @@
 private Spaceship spaceship = new Spaceship();
-private Asteroid ast = new Asteroid();
+Asteroid[] ast = new Asteroid[20];
+private ArrayList<Asteroid> rock = new ArrayList<Asteroid>();
 //private Bullet bul = new Bullet();
 Star[] nightSky = new Star[200];
 public void setup() {
   size(500, 500);
   for (int i = 0; i < nightSky.length; i ++) {
     nightSky[i] = new Star();
+  }
+  for (int j = 0; j < ast.length; j++) {
+    ast[j] = new Asteroid();
   }
 }
 public void draw() {
@@ -19,8 +23,13 @@ public void draw() {
   textSize(15);
   text(" X Position: " + spaceship.getX(), 20, 20);
   text(" Y Position: " + spaceship.getY(), 20, 40);
-  ast.move();
-  ast.show();
+  for( int j = 0; j < ast.length; j ++) {
+    ast[j].move();
+    ast[j].show();
+    ast[j].rotate(ast[j].getrotate());
+  }
+  for (int j = 0; j < rock.size; j++)
+  ast.get
 }
 
 public void keyPressed() {
@@ -85,16 +94,18 @@ class Spaceship extends Floater
 
 }
 class Asteroid extends Floater {
+  private int rotate;
   public Asteroid() {
+    rotate = (int)(Math.random()*20-10);
     myColor = color(50);
     myCenterX = (int)(Math.random()*400);
     myCenterY = (int)(Math.random()*400);
     myDirectionX = Math.random()*3-1;
     myDirectionY = Math.random()*3-1;
     myPointDirection = Math.random()*360;
-    corners = 8;
-    int[] xS = {-8, -8, -4, 4, 8, 8, 4, -4, -8};
-    int[] yS = {-8, -4, 0, 4, 8};
+    corners = 6;
+    int[] xS = {-12, -8, 4, 8, 4, -8};
+    int[] yS = {0, -8, -8, 0, 8, 8};
     xCorners = xS;
     yCorners = yS;
   }
@@ -108,8 +119,8 @@ class Asteroid extends Floater {
   public double getDirectionY(){return (double)myDirectionY;};   
   public void setPointDirection(int degrees){myPointDirection = degrees;} 
   public double getPointDirection(){return (int)myPointDirection;}; 
-  
-}
+  public int getrotate() {return (int)rotate;}
+  }
 /*class Bullet extends Floater {
   public Bullet() {
   }
