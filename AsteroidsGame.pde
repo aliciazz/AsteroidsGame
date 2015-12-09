@@ -1,8 +1,10 @@
 private Spaceship spaceship = new Spaceship();
 Asteroid[] ast = new Asteroid[20];
 private ArrayList<Asteroid> rock = new ArrayList<Asteroid>();
-//private Bullet bul = new Bullet();
+Bullet[] bull = new Bullet[10];
+private ArrayList<Bullet> bul = new ArrayList<Bullet>();
 Star[] nightSky = new Star[200];
+
 public void setup() {
   size(500, 500);
   for (int i = 0; i < nightSky.length; i ++) {
@@ -10,6 +12,15 @@ public void setup() {
   }
   for (int j = 0; j < ast.length; j++) {
     ast[j] = new Asteroid();
+  }
+  for (int a = 0; a < rock.size(); a++){
+    rock.add(new Asteroid());
+  }
+  for (int b = 0; b < bull.length; b ++) {
+    bull[b] = new Bullet();
+  }
+  for (int b = 0; b < bul.size(); b ++) {
+    bul.add(new Bullet());
   }
 }
 public void draw() {
@@ -23,15 +34,29 @@ public void draw() {
   textSize(15);
   text(" X Position: " + spaceship.getX(), 20, 20);
   text(" Y Position: " + spaceship.getY(), 20, 40);
+
   for( int j = 0; j < ast.length; j ++) {
     ast[j].move();
     ast[j].show();
     ast[j].rotate(ast[j].getrotate());
   }
-  for (int j = 0; j < rock.size; j++)
-  ast.get
-}
 
+  for (int a = 0; a < rock.size(); a ++) {
+    rock.get(a).move();
+    rock.get(a).show();
+    rock.get(a).rotate(rock.get(a).getrotate());
+  }
+  for( int b = 0; b < bull.length; b++)
+  {
+    bull[b].move();
+    bull[b].show(); 
+    bull[b].rotate()
+  }
+  for (int b = 0; b < bul.size(); b ++) {
+    bul.get(b).move();
+    bul.get(b).show();
+  }
+}
 public void keyPressed() {
   if (keyCode == UP)//up
     spaceship.accelerate(.3);
@@ -121,11 +146,33 @@ class Asteroid extends Floater {
   public double getPointDirection(){return (int)myPointDirection;}; 
   public int getrotate() {return (int)rotate;}
   }
-/*class Bullet extends Floater {
+  class Bullet extends Floater {
+  private int speed;
   public Bullet() {
+    myColor = color(255, 0, 0);
+    myPointDirection = 1;
+    myCenterX = spaceship.getX();
+    myCenterY = spaceship.getY();
+    myDirectionX = 0;
+    myDirectionY = 0;
   }
- 
-}*/
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX () {return (double)myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return (double)myDirectionY;};
+  public  void  setPointDirection (int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return (int)myPointDirection;}
+
+  public void show() {
+    fill(myColor);
+    ellipse((float)spaceship.getX(), (float)spaceship.getY(), (float)5, (float)8);
+  }
+
+}
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
@@ -144,7 +191,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   abstract public void setDirectionY(double y);   
   abstract public double getDirectionY();   
   abstract public void setPointDirection(int degrees);   
-  abstract public double getPointDirection(); 
+  abstract public double getPointDirection();
 
   //Accelerates the floater in the direction it is pointing (myPointDirection)   
   public void accelerate (double dAmount)   
