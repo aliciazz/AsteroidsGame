@@ -1,7 +1,5 @@
 private Spaceship spaceship = new Spaceship();
-Asteroid[] ast = new Asteroid[20];
-private ArrayList<Asteroid> rock = new ArrayList<Asteroid>();
-Bullet[] bull = new Bullet[10];
+private ArrayList<Asteroid> ast = new ArrayList<Asteroid>();
 private ArrayList<Bullet> bul = new ArrayList<Bullet>();
 Star[] nightSky = new Star[200];
 
@@ -10,11 +8,8 @@ public void setup() {
   for (int i = 0; i < nightSky.length; i ++) {
     nightSky[i] = new Star();
   }
-  for (int j = 0; j < ast.length; j++) {
-    ast[j] = new Asteroid();
-  }
-  for (int a = 0; a < rock.size(); a++){
-    rock.add(new Asteroid());
+  for (int j = 0; j < 20; j++) {
+    ast.add(new Asteroid());
   }
 }
 
@@ -27,8 +22,17 @@ public void draw() {
   for (int b = 0; b < bul.size(); b ++) {
     bul.get(b).move();
     bul.get(b).show(); 
-    if(bul.get(b).getX()==0 ||bul.get(b).getY()==0 || bul.get(b).getX() ==500 || bul.get(b).getY() == 500)
+    if(bul.get(b).getX()<2 ||bul.get(b).getY()<2 || bul.get(b).getX() >497 || bul.get(b).getY() >497){
       bul.remove(b);
+      break;
+    }
+    for( int j = 0; j < ast.size(); j ++) {
+      if (dist(bul.get(b).getX(), bul.get(b).getY(), ast.get(j).getX(), ast.get(j).getY()) < 20) {
+        ast.remove(j);
+        bul.remove(b);
+        break;
+      }
+    }
   }
   spaceship.move();
   spaceship.show();
@@ -36,20 +40,10 @@ public void draw() {
   text(" X Position: " + spaceship.getX(), 20, 20);
   text(" Y Position: " + spaceship.getY(), 20, 40);
 
-  for( int j = 0; j < ast.length; j ++) {
-    ast[j].move();
-    ast[j].show();
-    ast[j].rotate(ast[j].getrotate());
-  }
-
-  for (int a = 0; a < rock.size(); a ++) {
-    /*int d = dist(spaceship.setX(myCenterX), spaceship.setY(myCenterY), ast[a], ast[a](myCenterY))
-    if (d <10)
-      ast.remove(a);
-    */
-    rock.get(a).move();
-    rock.get(a).show();
-    rock.get(a).rotate(rock.get(a).getrotate());
+  for( int j = 0; j < ast.size(); j ++) {
+    ast.get(j).move();
+    ast.get(j).show();
+    ast.get(j).rotate(ast.get(j).getrotate());
   }
 }
 
